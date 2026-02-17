@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { insertMessageSchema, messages, users } from './schema';
+import { insertMessageSchema, type Message, type User, type MessageWithSender, type InsertMessage } from './schema';
+
+export type { InsertMessage };
 
 export const errorSchemas = {
   validation: z.object({
@@ -20,7 +22,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/messages' as const,
       responses: {
-        200: z.array(z.custom<typeof messages.$inferSelect & { sender: typeof users.$inferSelect }>()),
+        200: z.array(z.custom<MessageWithSender>()),
       },
     },
     create: {
@@ -28,7 +30,7 @@ export const api = {
       path: '/api/messages' as const,
       input: insertMessageSchema,
       responses: {
-        201: z.custom<typeof messages.$inferSelect & { sender: typeof users.$inferSelect }>(),
+        201: z.custom<MessageWithSender>(),
         400: errorSchemas.validation,
       },
     },
@@ -38,7 +40,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/users' as const,
       responses: {
-        200: z.array(z.custom<typeof users.$inferSelect>()),
+        200: z.array(z.custom<User>()),
       },
     }
   }
@@ -57,6 +59,6 @@ export function buildUrl(path: string, params?: Record<string, string | number>)
 }
 
 // WebSocket message types
-export type WsMessage = 
-  | { type: 'message'; payload: typeof messages.$inferSelect & { sender: typeof users.$inferSelect } }
-  | { type: 'typing'; payload: { userId: string; isTyping: boolean } };
+export type WsMessage =
+  | { type: 'message'; payload: MessageWithSender }
+  | { type: 'typing'; payload: { userId: number; isTyping: boolean } };

@@ -1,0 +1,6 @@
+com\chatnexus\resource\MessageResource.class
+com\chatnexus\entity\User.class
+com\chatnexus\resource\MessageResource$CreateMessageRequest.class
+com\chatnexus\resource\HealthResource.class
+com\chatnexus\entity\Message.class
+com\chatnexus\resource\UserResource.class

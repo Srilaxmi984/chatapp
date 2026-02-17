@@ -6,9 +6,9 @@ import { Loader2 } from "lucide-react";
 
 export default function ChatPage() {
   const { data: messages, isLoading, error } = useMessages();
-  
+
   // Initialize WebSocket connection
-  useChatWebSocket();
+  // useChatWebSocket();
 
   if (isLoading) {
     return (
@@ -27,7 +27,7 @@ export default function ChatPage() {
         <div className="text-center max-w-md bg-destructive/5 p-8 rounded-3xl border border-destructive/20">
           <h2 className="text-xl font-bold text-destructive mb-2">Something went wrong</h2>
           <p className="text-muted-foreground mb-4">{(error as Error).message}</p>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="px-6 py-2 bg-background border border-border rounded-lg text-sm hover:bg-secondary transition-colors"
           >
